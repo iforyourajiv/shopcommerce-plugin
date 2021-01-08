@@ -1,0 +1,88 @@
+2021-01-06T09:44:04+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /opt/lampp/htdocs/wordpress/wp-content/plugins/ced-boiler-plugin/admin/class-ced-boiler-plugin-admin.php:281
+Stack trace:
+#0 /opt/lampp/htdocs/wordpress/wp-includes/class-wp-hook.php(287): Ced_Boiler_Plugin_Admin->Ced_custom_post_type_menu('')
+#1 /opt/lampp/htdocs/wordpress/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 /opt/lampp/htdocs/wordpress/wp-includes/plugin.php(484): WP_Hook->do_action(Array)
+#3 /opt/lampp/htdocs/wordpress/wp-admin/includes/menu.php(155): do_action('admin_menu', '')
+#4 /opt/lampp/htdocs/wordpress/wp-admin/menu.php(327): require_once('/opt/lampp/htdo...')
+#5 /opt/lampp/htdocs/wordpress/wp-admin/admin.php(158): require('/opt/lampp/htdo...')
+#6 {main}
+  thrown in /opt/lampp/htdocs/wordpress/wp-content/plugins/ced-boiler-plugin/admin/class-ced-boiler-plugin-admin.php on line 281
+
+2021-01-06T09:47:21+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /opt/lampp/htdocs/wordpress/wp-content/plugins/ced-boiler-plugin/admin/class-ced-boiler-plugin-admin.php:283
+Stack trace:
+#0 /opt/lampp/htdocs/wordpress/wp-includes/class-wp-hook.php(287): Ced_Boiler_Plugin_Admin->Ced_custom_post_type_menu('')
+#1 /opt/lampp/htdocs/wordpress/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 /opt/lampp/htdocs/wordpress/wp-includes/plugin.php(484): WP_Hook->do_action(Array)
+#3 /opt/lampp/htdocs/wordpress/wp-admin/includes/menu.php(155): do_action('admin_menu', '')
+#4 /opt/lampp/htdocs/wordpress/wp-admin/menu.php(327): require_once('/opt/lampp/htdo...')
+#5 /opt/lampp/htdocs/wordpress/wp-admin/admin.php(158): require('/opt/lampp/htdo...')
+#6 {main}
+  thrown in /opt/lampp/htdocs/wordpress/wp-content/plugins/ced-boiler-plugin/admin/class-ced-boiler-plugin-admin.php on line 283
+
+2021-01-06T09:47:27+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /opt/lampp/htdocs/wordpress/wp-content/plugins/ced-boiler-plugin/admin/class-ced-boiler-plugin-admin.php:283
+Stack trace:
+#0 /opt/lampp/htdocs/wordpress/wp-includes/class-wp-hook.php(287): Ced_Boiler_Plugin_Admin->Ced_custom_post_type_menu('')
+#1 /opt/lampp/htdocs/wordpress/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 /opt/lampp/htdocs/wordpress/wp-includes/plugin.php(484): WP_Hook->do_action(Array)
+#3 /opt/lampp/htdocs/wordpress/wp-admin/includes/menu.php(155): do_action('admin_menu', '')
+#4 /opt/lampp/htdocs/wordpress/wp-admin/menu.php(327): require_once('/opt/lampp/htdo...')
+#5 /opt/lampp/htdocs/wordpress/wp-admin/admin.php(158): require('/opt/lampp/htdo...')
+#6 {main}
+  thrown in /opt/lampp/htdocs/wordpress/wp-content/plugins/ced-boiler-plugin/admin/class-ced-boiler-plugin-admin.php on line 283
+
+2021-01-06T09:51:36+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /opt/lampp/htdocs/wordpress/wp-content/plugins/ced-boiler-plugin/admin/class-ced-boiler-plugin-admin.php:286
+Stack trace:
+#0 /opt/lampp/htdocs/wordpress/wp-includes/class-wp-hook.php(287): Ced_Boiler_Plugin_Admin->Ced_custom_post_type_menu('')
+#1 /opt/lampp/htdocs/wordpress/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 /opt/lampp/htdocs/wordpress/wp-includes/plugin.php(484): WP_Hook->do_action(Array)
+#3 /opt/lampp/htdocs/wordpress/wp-admin/includes/menu.php(155): do_action('admin_menu', '')
+#4 /opt/lampp/htdocs/wordpress/wp-admin/menu.php(327): require_once('/opt/lampp/htdo...')
+#5 /opt/lampp/htdocs/wordpress/wp-admin/admin.php(158): require('/opt/lampp/htdo...')
+#6 {main}
+  thrown in /opt/lampp/htdocs/wordpress/wp-content/plugins/ced-boiler-plugin/admin/class-ced-boiler-plugin-admin.php on line 286
+
+2021-01-06T09:51:48+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /opt/lampp/htdocs/wordpress/wp-content/plugins/ced-boiler-plugin/admin/class-ced-boiler-plugin-admin.php:286
+Stack trace:
+#0 /opt/lampp/htdocs/wordpress/wp-includes/class-wp-hook.php(287): Ced_Boiler_Plugin_Admin->Ced_custom_post_type_menu('')
+#1 /opt/lampp/htdocs/wordpress/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 /opt/lampp/htdocs/wordpress/wp-includes/plugin.php(484): WP_Hook->do_action(Array)
+#3 /opt/lampp/htdocs/wordpress/wp-admin/includes/menu.php(155): do_action('admin_menu', '')
+#4 /opt/lampp/htdocs/wordpress/wp-admin/menu.php(327): require_once('/opt/lampp/htdo...')
+#5 /opt/lampp/htdocs/wordpress/wp-admin/admin.php(158): require('/opt/lampp/htdo...')
+#6 {main}
+  thrown in /opt/lampp/htdocs/wordpress/wp-content/plugins/ced-boiler-plugin/admin/class-ced-boiler-plugin-admin.php on line 286
+
+2021-01-06T09:59:39+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /opt/lampp/htdocs/wordpress/wp-content/plugins/ced-boiler-plugin/admin/class-ced-boiler-plugin-admin.php:288
+Stack trace:
+#0 /opt/lampp/htdocs/wordpress/wp-includes/class-wp-hook.php(287): Ced_Boiler_Plugin_Admin->Ced_custom_post_type_menu('')
+#1 /opt/lampp/htdocs/wordpress/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 /opt/lampp/htdocs/wordpress/wp-includes/plugin.php(484): WP_Hook->do_action(Array)
+#3 /opt/lampp/htdocs/wordpress/wp-admin/includes/menu.php(155): do_action('admin_menu', '')
+#4 /opt/lampp/htdocs/wordpress/wp-admin/menu.php(327): require_once('/opt/lampp/htdo...')
+#5 /opt/lampp/htdocs/wordpress/wp-admin/admin.php(158): require('/opt/lampp/htdo...')
+#6 {main}
+  thrown in /opt/lampp/htdocs/wordpress/wp-content/plugins/ced-boiler-plugin/admin/class-ced-boiler-plugin-admin.php on line 288
+
+2021-01-06T10:04:24+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /opt/lampp/htdocs/wordpress/wp-content/plugins/ced-boiler-plugin/admin/class-ced-boiler-plugin-admin.php:285
+Stack trace:
+#0 /opt/lampp/htdocs/wordpress/wp-includes/class-wp-hook.php(287): Ced_Boiler_Plugin_Admin->Ced_custom_post_type_menu('')
+#1 /opt/lampp/htdocs/wordpress/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 /opt/lampp/htdocs/wordpress/wp-includes/plugin.php(484): WP_Hook->do_action(Array)
+#3 /opt/lampp/htdocs/wordpress/wp-admin/includes/menu.php(155): do_action('admin_menu', '')
+#4 /opt/lampp/htdocs/wordpress/wp-admin/menu.php(327): require_once('/opt/lampp/htdo...')
+#5 /opt/lampp/htdocs/wordpress/wp-admin/admin.php(158): require('/opt/lampp/htdo...')
+#6 {main}
+  thrown in /opt/lampp/htdocs/wordpress/wp-content/plugins/ced-boiler-plugin/admin/class-ced-boiler-plugin-admin.php on line 285
+
+2021-01-06T10:04:53+00:00 CRITICAL Uncaught Error: [] operator not supported for strings in /opt/lampp/htdocs/wordpress/wp-content/plugins/ced-boiler-plugin/admin/class-ced-boiler-plugin-admin.php:285
+Stack trace:
+#0 /opt/lampp/htdocs/wordpress/wp-includes/class-wp-hook.php(287): Ced_Boiler_Plugin_Admin->Ced_custom_post_type_menu('')
+#1 /opt/lampp/htdocs/wordpress/wp-includes/class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 /opt/lampp/htdocs/wordpress/wp-includes/plugin.php(484): WP_Hook->do_action(Array)
+#3 /opt/lampp/htdocs/wordpress/wp-admin/includes/menu.php(155): do_action('admin_menu', '')
+#4 /opt/lampp/htdocs/wordpress/wp-admin/menu.php(327): require_once('/opt/lampp/htdo...')
+#5 /opt/lampp/htdocs/wordpress/wp-admin/admin.php(158): require('/opt/lampp/htdo...')
+#6 {main}
+  thrown in /opt/lampp/htdocs/wordpress/wp-content/plugins/ced-boiler-plugin/admin/class-ced-boiler-plugin-admin.php on line 285
+
