@@ -113,10 +113,34 @@ class Shopcommerce_Public
 
 	function my_custom_template_for_single_product_page($template)
 	{
-		$post_type = array('product');
+		$post_type = 'product';
 		if (is_singular($post_type)) {
-			$template = dirname(__FILE__) . '/partials/product-template.php';
+			$template = dirname(__FILE__) . '/partials/shopcommerce-product-template.php';
 		}
 		return $template;
 	}
+	// my_custom_template_for_single_product_page Ends Here
+
+
+	/**
+	 * function Name :my_custom_template_for_cart_product_page
+	 * Description: Adding Our Own Custom Theme Path Whenever We Will Get Cart Page
+	 * @since  :1.0.0
+	 * Version :1.0.0
+	 * @return $template
+	 * @param, int $pagename (For Fetching Page Name)
+	 */
+
+
+	function my_custom_template_for_cart_product_page($template)
+	{
+
+		$pagename = get_query_var('pagename');
+		if ($pagename == 'cart') {
+			$template = dirname(__FILE__) . '/partials/shopcommerce-cart-template.php';
+		}
+		return $template;
+	}
+
+	// my_custom_template_for_cart_product_page Ends Here
 }

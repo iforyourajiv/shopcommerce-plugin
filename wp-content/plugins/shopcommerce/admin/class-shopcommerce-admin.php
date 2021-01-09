@@ -319,18 +319,24 @@ class Shopcommerce_Admin
 	 * Version :1.0.0
 	 * @return $content
 	 * @param int $content
+	 * @param int $loop (fetching Data from DB having a Post type "product")
 	 */
 
 	public function ced_shortcode_shop($content = null)
 	{  
-		$loop = new WP_Query(array('post_type' => 'product'));
-		while ($loop->have_posts()) : 
-			$loop->the_post();
+		$wp_query = null; 
+		$wp_query = new WP_Query(); 
+		$paged = (get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+		$wp_query->query('showposts=2&post_type=product'.'&paged='.$paged);
+		while ($wp_query->have_posts()) : 
+			$wp_query->the_post();
 			$content = the_title('<h3 class="entry-title"><a href="' . get_permalink() . '">', '</a></h3>');
 			$content .= the_post_thumbnail();
 			echo "<h3>Price:$".get_post_meta(get_the_ID(),'ced_metabox_pricing', true)."</h3>";
 			$content .= "<div class='entry-content'>" . the_content() . "</div>";
 		endwhile;
+		$content.= previous_posts_link( 'Older posts' );
+		$content.= next_posts_link( 'Newer posts' );
 		return $content;
 	}
 

@@ -54,7 +54,6 @@ class Shopcommerce_Activator
 			$my_post = array(
 				'post_title'    => wp_strip_all_tags('Cart'),
 				'post-name'		=> wp_strip_all_tags('Cart'),
-				'post_content'  => '[ced_cart_content]',
 				'post_status'   => 'publish',
 				'post_author'   => 1,
 				'post_type'     => 'page',
