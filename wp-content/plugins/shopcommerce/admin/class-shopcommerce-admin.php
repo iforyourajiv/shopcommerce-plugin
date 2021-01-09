@@ -54,56 +54,8 @@ class Shopcommerce_Admin
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 		// Adding Shortcode For Shop Page
-		add_shortcode('ced_shop_content',array($this, 'ced_shortcode_shop'));
+		add_shortcode('ced_shop_content', array($this, 'ced_shortcode_shop'));
 	}
-
-	/**
-	 * Register the stylesheets for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_styles()
-	{
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Shopcommerce_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Shopcommerce_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/shopcommerce-admin.css', array(), $this->version, 'all');
-	}
-
-	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_scripts()
-	{
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Shopcommerce_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Shopcommerce_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/shopcommerce-admin.js', array('jquery'), $this->version, false);
-	}
-
-
 
 	/**
 	 * function Name :ced_customPost_Product
@@ -170,8 +122,9 @@ class Shopcommerce_Admin
 		{
 			$valueforinventory = get_post_meta($post->ID, 'ced_metabox_inventory', true);
 ?>
+			<span style="color:red" id="massageinventory"></span>
 			<label for="ced_meta_box_field">Inventory</label>
-			<input type="text" id="ced_input_meta_inventory" name="ced_input_meta_inventory" value="<?php echo _e($valueforinventory) ?>">
+			<input type="number" id="ced_input_meta_inventory" min="0" name="ced_input_meta_inventory" value="<?php echo _e($valueforinventory) ?>">
 		<?php
 		}
 	}
@@ -186,12 +139,12 @@ class Shopcommerce_Admin
 	 */
 	public function ced_custom_meta_inventory_save(int $post_id)
 	{
-
+		$inventoryvalue = empty($_POST['ced_input_meta_inventory']) ? 0 : $_POST['ced_input_meta_inventory'];
 		if (array_key_exists('ced_input_meta_inventory', $_POST)) {
 			update_post_meta(
 				$post_id,
 				'ced_metabox_inventory',
-				$_POST['ced_input_meta_inventory']
+				sanitize_text_field($inventoryvalue)
 			);
 		}
 	}
@@ -230,11 +183,13 @@ class Shopcommerce_Admin
 		function ced_custom_meta_pricing_html($post)
 		{
 			$valueforinventory = get_post_meta($post->ID, 'ced_metabox_pricing', true);
-
-		?> <label for="ced_meta_box_field">Discounted Price</label>
-			<input type="number" id="ced_input_meta_discount" name="ced_input_meta_discount" value="<?php echo _e($valueforinventory, 'shopcommerce') ?>">
+		?> <span style="color:red" id="massage"></span>
+			<br>
+			<label for="ced_meta_box_field">Discounted Price</label>
+			<input type="number" id="ced_input_meta_discount" min="0" name="ced_input_meta_discount" value="<?php echo _e($valueforinventory['discountPrice']) ?>">
 			<label for="ced_meta_box_field">Regular Price</label>
-			<input type="number" id="ced_input_meta_regular_price" name="ced_input_meta_regular_price" value="<?php echo _e($valueforinventory, 'shopcommerce') ?>">
+			<input type="number" id="ced_input_meta_regular_price" min="0" name="ced_input_meta_regular_price" value="<?php echo _e($valueforinventory['regularPrice']) ?>">
+
 <?php
 		}
 	}
@@ -250,19 +205,16 @@ class Shopcommerce_Admin
 	 */
 	public function ced_custom_meta_pricing_save(int $post_id)
 	{
-		$finalvalue = 0;
-		$discountPrice = isset($_POST['ced_input_meta_discount']) ? $_POST['ced_input_meta_discount'] : false;
-		$regularPrice = isset($_POST['ced_input_meta_regular_price']) ? $_POST['ced_input_meta_regular_price'] : false;
-		if (empty($discountPrice) || $discountPrice == 0) {
-			$finalvalue = sanitize_text_field($regularPrice);
-		} else {
-			$finalvalue = sanitize_text_field($discountPrice);
-		}
+		$finalvalue = array();
+		$discountPrice = isset($_POST['ced_input_meta_discount']) ? $_POST['ced_input_meta_discount'] : 0;
+		$regularPrice = isset($_POST['ced_input_meta_regular_price']) ? $_POST['ced_input_meta_regular_price'] : 0;
+		$finalvalue = array('discountPrice' => $discountPrice, 'regularPrice' => $regularPrice);
+
 		if (array_key_exists('ced_input_meta_discount', $_POST)) {
 			update_post_meta(
 				$post_id,
 				'ced_metabox_pricing',
-				sanitize_text_field($finalvalue)
+				$finalvalue
 			);
 		}
 	}
@@ -276,14 +228,14 @@ class Shopcommerce_Admin
 	 * @since  :1.0.0
 	 * Version :1.0.0
 	 * @return void
-	 * @param int $labels
+	 * @param int $labels For All Label for Taxonomy
 	 */
 
 	public function ced_product_taxonomy()
 	{
 		$labels = array(
-			'name'              => __('Product_Category', 'shopcommerce'),
-			'singular_name'     => __('Product_Category', 'shopcommerce'),
+			'name'              => __('Product_Category'),
+			'singular_name'     => __('Product_Category'),
 			'search_items'      => __('Search Product Category'),
 			'all_items'         => __('All Product Category'),
 			'edit_item'         => __('Edit Product Category'),
@@ -293,24 +245,19 @@ class Shopcommerce_Admin
 			'menu_name'         => __('Product Category'),
 		);
 
-		register_taxonomy(
-			'Product taxonomy', //Name
-			'product', //Object
-			array(
-				'label' => __('Product Category'),
-				'labels' => $labels,
-				'show_ui'           => true,
-				'show_admin_column' => true,
-				'query_var'         => true,
-				'rewrite' => array('slug' => 'product'),
-				'hierarchical' => true
+		$args = [
+			'hierarchical' => true,
+			'labels' => $labels,
+			'show_ui' => true,
+			'show_admin_column' => true,
+			'query_var' => true,
+			'rewrite' => array('slug' => 'product'),
+		];
 
-			)
-
-		);
+		register_taxonomy('ProductCategory', ['product'], $args);
 	}
 
-// Taxonomy Function Ends Here
+	// Taxonomy Function Ends Herewp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/validate.js', array('jquery'), $this->version, false);
 
 	/**
 	 * function Name :ced_product_taxonomy
@@ -323,25 +270,38 @@ class Shopcommerce_Admin
 	 */
 
 	public function ced_shortcode_shop($content = null)
-	{  
-		$wp_query = null; 
-		$wp_query = new WP_Query(); 
-		$paged = (get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-		$wp_query->query('showposts=2&post_type=product'.'&paged='.$paged);
-		while ($wp_query->have_posts()) : 
+	{
+		$wp_query = null;
+		$wp_query = new WP_Query();
+		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+		$wp_query->query('showposts=3&post_type=product' . '&paged=' . $paged);
+		while ($wp_query->have_posts()) :
 			$wp_query->the_post();
+			$price = get_post_meta(get_the_ID(), 'ced_metabox_pricing', true);
 			$content = the_title('<h3 class="entry-title"><a href="' . get_permalink() . '">', '</a></h3>');
 			$content .= the_post_thumbnail();
-			echo "<h3>Price:$".get_post_meta(get_the_ID(),'ced_metabox_pricing', true)."</h3>";
+			echo "<h3>Price:$" . $price['discountPrice'] . "</h3>";
 			$content .= "<div class='entry-content'>" . the_content() . "</div>";
 		endwhile;
-		$content.= previous_posts_link( 'Older posts' );
-		$content.= next_posts_link( 'Newer posts' );
+		// $content.= previous_posts_link( 'Older posts' );
+		// $content.= next_posts_link( 'Newer posts' );
 		return $content;
 	}
 
 
-
-
-
+	/**
+	 * function Name :product_admin_script
+	 * Description:Enqueuing Script Whenever Post Type is Product And Check Validation
+	 * @since  :1.0.0
+	 * Version :1.0.0
+	 * @param int $status 
+	 * @return void
+	 */
+	function product_admin_script()
+	{
+		$status = get_current_screen();
+		if ($status->post_type == "product") {
+			wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/validate.js', array('jquery'), $this->version, false);
+		}
+	}
 }

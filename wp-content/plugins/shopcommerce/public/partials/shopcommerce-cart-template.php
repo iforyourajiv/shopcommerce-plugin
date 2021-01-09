@@ -26,7 +26,7 @@ session_start();
  */
 get_header();
 
-if(empty($_SESSION['cedstore'])){
+if (empty($_SESSION['cedstore'])) {
     echo "<h1>Cart is Empty, Please Add Some Product</h1>";
 }
 $total = 0;
@@ -40,7 +40,7 @@ foreach ($_SESSION['cedstore'] as $element) { //Loop start for Session Variable
     $cart_productQuantity = $element['quantity']; //Getting Product Quantity
     $html .= "<tr>";
     $html .= "<td> $cart_productName </td>";
-    $html .= "<td>$ $cart_productPrice </td>";
+    $html .= "<td>$  $cart_productPrice </td>";
     $html .= "<td>$cart_productQuantity";
     $html .= "<a style='margin-left:10px' href='?increaseqty=$cart_id'>+</a> ";
     $html .= "<a style='margin-left:10px' href='?decreaseqty=$cart_id'>-</a> </td> ";

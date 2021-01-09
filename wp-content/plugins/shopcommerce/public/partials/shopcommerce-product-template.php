@@ -24,18 +24,21 @@ session_start();
 get_header();
 
 
-	/**
-	 *
-	 * Description:Runnong While Loop For Listing A Product ON Shop Page
-	 * @since  :1.0.0
-	 * Version :1.0.0
-	 */
+/**
+ *
+ * Description:Runnong While Loop For Listing A Product ON Shop Page
+ * @since  :1.0.0
+ * Version :1.0.0
+ */
 
 while (have_posts()) : the_post();
 ?>
+
     <h1 class="title"><a href="<?php the_permalink(); ?>"><?php the_title() ?></a></h1>
-    <?php the_post_thumbnail() ?>
-    <h2>Price $<?php echo get_post_meta($id, 'ced_metabox_pricing', true) ?></h2>
+    <?php the_post_thumbnail();
+    $price = get_post_meta($id, 'ced_metabox_pricing', true);
+    ?>
+    <h2>Price $<?php echo $price['discountPrice']; ?></h2>
     <div class="entry">
         <h4> Description :</h4><?php the_content();
                             endwhile; //loop ends here
@@ -49,19 +52,20 @@ while (have_posts()) : the_post();
     <?php
 
 
-// If Session is Empty then Create new Session Variable Of Type Array 
+    // If Session is Empty then Create new Session Variable Of Type Array 
     if (empty($_SESSION['cedstore'])) {
         $_SESSION['cedstore'] = array();
     }
 
-// If Anyone Click Add to Cart Button then This Block Will Run
+    // If Anyone Click Add to Cart Button then This Block Will Run
     if (isset($_POST['ced_add_to_cart'])) { // Checking if Button is set or not
         $post_id_for_cart = $_POST['ced_post_id_forCart']; // Getting Product Id
         $post_item_cart = get_post($post_id_for_cart); // Getting Individual Product With ID
         $ced_product_name = $post_item_cart->post_title; // Getting Product Title
-        $ced_product_price = get_post_meta($post_id_for_cart, 'ced_metabox_pricing', true); // Getting Price for Product With Post meta
+        $price = get_post_meta($post_id_for_cart, 'ced_metabox_pricing', true);
+        $ced_product_price = $price['discountPrice']; // Getting Price for Product With Post meta
         $quantity = 1; //Default Quantity For Product
-        $found = false; 
+        $found = false;
         foreach ($_SESSION['cedstore'] as $element => $data) { // Runing Loop for checking Uniqeness of Product
             if ($data['id'] == $post_id_for_cart) { // Matching Array Id with Post Id
                 $_SESSION['cedstore'][$element]['quantity'] += 1; //If id is match  Quantity Will Increase
@@ -76,13 +80,13 @@ while (have_posts()) : the_post();
             echo "Product Added In Cart";
         }
     }
-       
+
     ?>
-    
+
     <?php
-         /**
-         *Getting Footer
-        */
+    /**
+     *Getting Footer
+     */
     get_footer() ?>
 
 

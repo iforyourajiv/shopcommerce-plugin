@@ -155,9 +155,7 @@ class Shopcommerce
 	{
 
 		$plugin_admin = new Shopcommerce_Admin($this->get_plugin_name(), $this->get_version());
-
-		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
-		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'product_admin_script');
 		// Creating Custom Post Type Having a Name with 'Product'
 		$this->loader->add_action('init', $plugin_admin, 'ced_customPost_Product');
 		//Adding Meta-Box Inventory for Product
@@ -170,8 +168,9 @@ class Shopcommerce
 		$this->loader->add_action('save_post', $plugin_admin, 'ced_custom_meta_pricing_save');
 		//Adding Custom Taxonomy For Product
 		$this->loader->add_action('init', $plugin_admin, 'ced_product_taxonomy');
-		// $this->loader->add_shortcode('init',$plugin_admin,'ced_shop_content''ced_shortcode_shop');
+	
 
+		
 	}
 
 	/**
@@ -185,9 +184,6 @@ class Shopcommerce
 	{
 
 		$plugin_public = new Shopcommerce_Public($this->get_plugin_name(), $this->get_version());
-
-		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
-		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
 		//Including Our Own Template For Single Product Page In Theme 
 		$this->loader->add_action('template_include', $plugin_public, 'my_custom_template_for_single_product_page');
 		//Including Our Own Template For cart  Page In Theme 
