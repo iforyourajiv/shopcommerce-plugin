@@ -60,6 +60,11 @@ if (isset($_GET['del'])) {
     foreach ($_SESSION['cedstore'] as $element => $data) { //Loop Start
         if ($data['id'] == $id_for_del) { // Matching Array Id for Coming Product Id
             unset($_SESSION['cedstore'][$element]); //if Matched then Product will be removed
+             //If user is Logged In then The Session Data Will Be Update In User Meta
+             if (is_user_logged_in()) {
+                $user_id = get_current_user_id();
+                update_user_meta($user_id, 'ced_shopcommerce_cart', $_SESSION['cedstore']);
+            }
         }
     }
 
@@ -74,6 +79,11 @@ if (isset($_GET['increaseqty'])) {
     foreach ($_SESSION['cedstore'] as $element => $data) {  //Loop Start
         if ($data['id'] ==  $id_qty_update) { // Matching Array Id for Coming Product Id
             $_SESSION['cedstore'][$element]['quantity'] += 1; //if Matched then Product Quantity Will Increased
+            //If user is Logged In then The Session Data Will Be Update In User Meta
+            if (is_user_logged_in()) {
+                $user_id = get_current_user_id();
+                update_user_meta($user_id, 'ced_shopcommerce_cart', $_SESSION['cedstore']);
+            }
         }
     }
 
@@ -89,6 +99,12 @@ if (isset($_GET['decreaseqty'])) {
             $_SESSION['cedstore'][$element]['quantity'] -= 1; //if Matched then Product Quantity Will decreased
             if ($_SESSION['cedstore'][$element]['quantity'] == 0) { // Checking if Quantity is greater then 0
                 unset($_SESSION['cedstore'][$element]); // if Quantity will be less then or equal to 0 then Product Will Removed
+
+                //If user is Logged In then The Session Data Will Be Update In User Meta
+                if (is_user_logged_in()) {
+                    $user_id = get_current_user_id();
+                    update_user_meta($user_id, 'ced_shopcommerce_cart', $_SESSION['cedstore']);
+                }
             }
         }
     }
