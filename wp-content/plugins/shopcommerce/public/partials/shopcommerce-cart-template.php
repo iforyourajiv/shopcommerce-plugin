@@ -33,7 +33,8 @@ if (empty($_SESSION['cedstore'])) {
 
 if (is_user_logged_in()) {
     $user_id = get_current_user_id();
-    $userCart = get_user_meta($user_id, 'ced_shopcommerce_cart', isset($_SESSION['cedstore']) ? $_SESSION['cedstore'] : '', 1);
+    $userCart = get_user_meta($user_id, 'ced_shopcommerce_cart', 1);
+    $_SESSION['cedstore']=$userCart;
     if (is_array($userCart) && !empty($userCart) && !empty($userCart[0])) {
         $total = 0;
         $html = "";//  $html variable is intialized 

@@ -60,7 +60,7 @@ while (have_posts()) : the_post();
     // If Anyone Click Add to Cart Button then This Block Will Run
     if (isset($_POST['ced_add_to_cart'])) { // Checking if Button is set or not
         $post_id_for_cart = $_POST['ced_post_id_forCart']; // Getting Product Id
-        $post_item_cart = get_post($post_id_for_cart); // Getting Individual Product With ID
+        $post_item_cart = get_post($post_id_for_cart); // Getting Single Product from DB With ID
         $ced_product_name = $post_item_cart->post_title; // Getting Product Title
         $price = get_post_meta($post_id_for_cart, 'ced_metabox_pricing', true);
         $ced_product_price = $price['discountPrice']; // Getting Price for Product With Post meta
@@ -89,6 +89,10 @@ while (have_posts()) : the_post();
             if (is_user_logged_in()) {
                 $user_id = get_current_user_id();
                 add_user_meta($user_id, 'ced_shopcommerce_cart', '', 1);
+                $userCart = get_user_meta($user_id, 'ced_shopcommerce_cart', 1);
+                if (is_array($userCart) && !empty($userCart) && !empty($userCart[0])) {
+                    $_SESSION['cedstore'] = $userCart;
+                }
                 update_user_meta($user_id, 'ced_shopcommerce_cart', $_SESSION['cedstore']);
             }
             echo "Product Added In Cart";
