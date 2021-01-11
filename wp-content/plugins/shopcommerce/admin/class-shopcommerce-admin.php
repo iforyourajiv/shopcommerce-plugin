@@ -261,9 +261,12 @@ if (!class_exists('Shopcommerce_Admin')) {
 
 		// Taxonomy Function Ends Herewp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/validate.js', array('jquery'), $this->version, false);
 
+
+
+
 		/**
-		 * function Name :ced_product_taxonomy
-		 * Description:Creating Taxonomy For Product 
+		 * function Name :ced_shortcode_shop
+		 * Description:Creating Short code for displaying the products in shop Page
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 * @return $content
@@ -273,10 +276,11 @@ if (!class_exists('Shopcommerce_Admin')) {
 
 		public function ced_shortcode_shop($content = null)
 		{
-			$wp_query = null;
-			$wp_query = new WP_Query();
-			$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-			$wp_query->query('showposts=2&post_type=product' . '&paged=' . $paged);
+			$wp_query = new WP_Query(array(
+				'posts_per_page' => 1,
+				'post_type' => 'product',
+				'paged' => get_query_var('paged') ? get_query_var('paged') : 1
+			)); // Getting Product For Per Page Pagination
 			while ($wp_query->have_posts()) :
 				$wp_query->the_post();
 				$price = get_post_meta(get_the_ID(), 'ced_metabox_pricing', true);
@@ -285,8 +289,12 @@ if (!class_exists('Shopcommerce_Admin')) {
 				echo "<h3>Price:$" . $price['discountPrice'] . "</h3>";
 				$content .= "<div class='entry-content'>" . the_content() . "</div>";
 			endwhile;
-			$content .= previous_posts_link('previous');
-			$content .= next_posts_link('Next');
+			$content .= paginate_links(array(
+				'base'   => add_query_arg('paged', '%#%'),
+				'format' => '?paged=%#%',
+				'current' => max(1, get_query_var('paged')),
+				'total' => $wp_query->max_num_pages
+			));
 			return $content;
 		}
 
