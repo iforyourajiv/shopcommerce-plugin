@@ -274,7 +274,8 @@ class Shopcommerce_Admin
 		$wp_query = null;
 		$wp_query = new WP_Query();
 		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-		$wp_query->query('showposts=3&post_type=product' . '&paged=' . $paged);
+		$wp_query->query('showposts=2&post_type=product' . '&paged=' . $paged);
+		echo $paged;
 		while ($wp_query->have_posts()) :
 			$wp_query->the_post();
 			$price = get_post_meta(get_the_ID(), 'ced_metabox_pricing', true);
@@ -283,8 +284,8 @@ class Shopcommerce_Admin
 			echo "<h3>Price:$" . $price['discountPrice'] . "</h3>";
 			$content .= "<div class='entry-content'>" . the_content() . "</div>";
 		endwhile;
-		// $content.= previous_posts_link( 'Older posts' );
-		// $content.= next_posts_link( 'Newer posts' );
+		$content.= previous_posts_link( 'Older posts' );
+		$content.= next_posts_link( 'Newer posts' );
 		return $content;
 	}
 

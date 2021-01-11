@@ -76,7 +76,6 @@ while (have_posts()) : the_post();
 
                 if (is_user_logged_in()) {
                     $user_id = get_current_user_id();
-                    echo $user_id;
                     update_user_meta($user_id, 'ced_shopcommerce_cart', $_SESSION['cedstore']);
                 }
             }
@@ -89,7 +88,6 @@ while (have_posts()) : the_post();
             //If user is Logged In then new User Meta will created and Session Data Will Be Store in Permanently In User Meta 
             if (is_user_logged_in()) {
                 $user_id = get_current_user_id();
-                echo $user_id;
                 add_user_meta($user_id, 'ced_shopcommerce_cart', '', 1);
                 update_user_meta($user_id, 'ced_shopcommerce_cart', $_SESSION['cedstore']);
             }
