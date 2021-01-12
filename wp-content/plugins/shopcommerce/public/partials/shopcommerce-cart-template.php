@@ -20,25 +20,24 @@
  *Session Started
  */
 session_start();
-
 /**
  *Getting Header
  */
 get_header();
 
+echo $_SESSION['message'];
 if (empty($_SESSION['cedstore']) || !isset($_SESSION['cedstore'])) {
     echo "<h1>Cart is Empty, Please Add Some Product</h1>";
 }
 
-if(is_user_logged_in()){
+if (is_user_logged_in()) {
     $user_id = get_current_user_id();
     $userCart = get_user_meta($user_id, 'ced_shopcommerce_cart', 1);
-
 }
 
 // if user logged in the update immediately current Session Value on Db for Specific user
-if(!empty($_SESSION['cedstore']) || isset($_SESSION['cedstore'])){
-    if(is_user_logged_in()){
+if (!empty($_SESSION['cedstore']) || isset($_SESSION['cedstore'])) {
+    if (is_user_logged_in()) {
         $user_id = get_current_user_id();
         update_user_meta($user_id, 'ced_shopcommerce_cart', $_SESSION['cedstore']);
     }
@@ -63,9 +62,9 @@ if (is_user_logged_in()) {
             $html .= "<tr>";
             $html .= "<td> $cart_productName </td>";
             $html .= "<td>$  $cart_productPrice </td>";
-            $html .= "<td>$cart_productQuantity";
-            $html .= "<a style='margin-left:10px' href='?increaseqty=$cart_id'>+</a> ";
-            $html .= "<a style='margin-left:10px' href='?decreaseqty=$cart_id'>-</a> </td> ";
+            $html .= "<td><a style='margin-left:10px' href='?decreaseqty=$cart_id'>-</a> ";
+            $html .= "$cart_productQuantity";
+            $html .= "<a style='margin-left:10px' href='?increaseqty=$cart_id'>+</a> </td> ";
             $itemTotal = $cart_productQuantity * $cart_productPrice; // Calculating Price for Individual Product
             $html .= "<td>$ $itemTotal</td>";
             $total = $total + $itemTotal; // Calculating Total Price Of Cart
@@ -73,6 +72,7 @@ if (is_user_logged_in()) {
         }
         $html .= "</table>";
         $html .= "<h4> Total :-$$total</h4>";
+        $html .= "<a href='checkout'><button style='float:right;margin-bottom:20px;'>Checkout</button></a>";
         echo $html; // Displayng Whole Cart Product In Table
     }
     if (empty($userCart)) {
@@ -94,9 +94,9 @@ if (is_user_logged_in()) {
             $html .= "<tr>";
             $html .= "<td> $cart_productName </td>";
             $html .= "<td>$  $cart_productPrice </td>";
-            $html .= "<td>$cart_productQuantity";
-            $html .= "<a style='margin-left:10px' href='?increaseqty=$cart_id'>+</a> ";
-            $html .= "<a style='margin-left:10px' href='?decreaseqty=$cart_id'>-</a> </td> ";
+            $html .= "<td><a style='margin-left:10px' href='?decreaseqty=$cart_id'>-</a> ";
+            $html .= "$cart_productQuantity";
+            $html .= "<a style='margin-left:10px' href='?increaseqty=$cart_id'>+</a> </td> ";
             $itemTotal = $cart_productQuantity * $cart_productPrice; // Calculating Price for Individual Product
             $html .= "<td>$ $itemTotal</td>";
             $total = $total + $itemTotal; // Calculating Total Price Of Cart
@@ -104,6 +104,7 @@ if (is_user_logged_in()) {
         }
         $html .= "</table>";
         $html .= "<h4> Total :-$$total</h4>";
+        $html .= "<a href='checkout'><button style='float:right;margin-bottom:20px;'>Checkout</button></a>";
         echo $html; // Displayng Whole Cart Product In Table
 
     }
@@ -134,14 +135,22 @@ if (isset($_GET['increaseqty'])) {
     $id_qty_update = $_GET['increaseqty']; //Getting Id from URL for Updating a Quantity
     foreach ($_SESSION['cedstore'] as $element => $data) {  //Loop Start
         if ($data['id'] ==  $id_qty_update) { // Matching Array Id for Coming Product Id
-            $_SESSION['cedstore'][$element]['quantity'] += 1; //if Matched then Product Quantity Will Increased
-            //If user is Logged In then The Session Data Will Be Update In User Meta
-            if (is_user_logged_in()) {
-                $user_id = get_current_user_id();
-                update_user_meta($user_id, 'ced_shopcommerce_cart', $_SESSION['cedstore']);
+            $inventory = get_post_meta($id_qty_update, 'ced_metabox_inventory', true); // Getting Inventory For Product
+            if ($_SESSION['cedstore'][$element]['quantity'] < $inventory) { //checking if Inventory less then Quantity
+                $_SESSION['cedstore'][$element]['quantity'] += 1; //if Matched then Product Quantity Will Increased
+                $_SESSION['message'] = "";
+                //If user is Logged In then The Session Data Will Be Update In User Meta
+                if (is_user_logged_in()) {
+                    $user_id = get_current_user_id();
+                    update_user_meta($user_id, 'ced_shopcommerce_cart', $_SESSION['cedstore']);
+                }
+            } else {
+                $_SESSION['message'] = "<h3 style='text-align:center'>Product in Out Of Stock</h3>";
             }
         }
     }
+
+
 
     $redirect = home_url('cart'); // Saving Redirect Path
     echo ("<script>location.href = '" . $redirect . "'</script>");  //Redirecting Path
@@ -153,6 +162,7 @@ if (isset($_GET['decreaseqty'])) {
     foreach ($_SESSION['cedstore'] as $element => $data) { //Loop Start
         if ($data['id'] ==  $id_qty_update) { // Matching Array Id for Coming Product Id
             $_SESSION['cedstore'][$element]['quantity'] -= 1; //if Matched then Product Quantity Will decreased
+            $_SESSION['message'] = "";
             //If user is Logged In then The Session Data Will Be Update In User Meta
             if (is_user_logged_in()) {
                 $user_id = get_current_user_id();
@@ -178,4 +188,3 @@ if (isset($_GET['decreaseqty'])) {
 get_footer();
 ?>
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
-©

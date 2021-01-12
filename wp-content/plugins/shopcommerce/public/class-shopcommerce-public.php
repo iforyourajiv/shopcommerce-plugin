@@ -57,6 +57,11 @@ if (!class_exists('Shopcommerce_Public')) {
 			$this->version = $version;
 		}
 
+
+		public function enqueue_styles() {
+			wp_enqueue_style( 'ced-plugin-css', plugin_dir_url( __FILE__ ) . 'css/style.css', array(), $this->version, 'all' );
+		}
+
 		/**
 		 * function Name :my_custom_template_for_single_product_page
 		 * Description: Adding Our Own Custom Theme Path Whenever We Will Get Single.php with sepecific Type
@@ -98,8 +103,53 @@ if (!class_exists('Shopcommerce_Public')) {
 			return $template;
 		}
 
-
-
 		// my_custom_template_for_cart_product_page Ends Here
+
+
+		/**
+		 * function Name :my_custom_template_for_checkout_product_page
+		 * Description: Adding Our Own Custom Theme Path Whenever We Will Get Checkout Page
+		 * @since  :1.0.0
+		 * Version :1.0.0
+		 * @return $template
+		 * @param  $template 
+		 * @var, int $pagename (For Fetching Page Name)
+		 */
+
+
+		function my_custom_template_for_checkout_product_page($template)
+		{
+
+			$pagename = get_query_var('pagename');
+			if ($pagename == 'checkout') {
+				$template = dirname(__FILE__) . '/partials/shopcommerce-checkout-template.php';
+			}
+			return $template;
+		}
+
+		//  my_custom_template_for_checkout_product_page Ends Here
+
+		/**
+		 * function Name :my_custom_template_for_thankyou_product_page
+		 * Description: Adding Our Own Custom Theme Path Whenever We Will Get Checkout Page
+		 * @since  :1.0.0
+		 * Version :1.0.0
+		 * @return $template
+		 * @param  $template 
+		 * @var, int $pagename (For Fetching Page Name)
+		 */
+
+
+		function my_custom_template_for_thankyou_product_page($template)
+		{
+
+			$pagename = get_query_var('pagename');
+			if ($pagename == 'thankyou') {
+				$template = dirname(__FILE__) . '/partials/shopcommerce-thankyou-template.php';
+			}
+			return $template;
+		}
+
+		//  my_custom_template_for_thankyou_product_page Ends Here
 	}
 }

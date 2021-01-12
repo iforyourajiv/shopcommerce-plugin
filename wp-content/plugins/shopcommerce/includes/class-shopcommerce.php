@@ -183,10 +183,15 @@ class Shopcommerce
 	{
 
 		$plugin_public = new Shopcommerce_Public($this->get_plugin_name(), $this->get_version());
+		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
 		//Including Our Own Template For Single Product Page In Theme 
 		$this->loader->add_action('template_include', $plugin_public, 'my_custom_template_for_single_product_page');
 		//Including Our Own Template For cart  Page In Theme 
 		$this->loader->add_action('template_include', $plugin_public, 'my_custom_template_for_cart_product_page');
+		//Including Our Own Template For Checkout  Page In Theme 
+		$this->loader->add_action('template_include', $plugin_public, 'my_custom_template_for_checkout_product_page');
+		//Including Our Own Template For thankyou  Page In Theme 
+		$this->loader->add_action('template_include', $plugin_public, 'my_custom_template_for_thankyou_product_page');
 	}
 
 	/**
