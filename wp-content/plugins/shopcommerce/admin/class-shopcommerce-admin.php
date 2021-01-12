@@ -106,7 +106,7 @@ if (!class_exists('Shopcommerce_Admin')) {
 				'Inventory', // Box title
 				'ced_custom_meta_inventory_html',  // Content callback, must be of type callable
 				'Product', // Post type
-				'side'
+				'side' //postiton
 			);
 
 
@@ -137,7 +137,8 @@ if (!class_exists('Shopcommerce_Admin')) {
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 * @return void
-		 * @param int $post_id The ID of the post being saved.
+		 * @param int $post_id  //The ID of the post being saved.
+		 * @var int $inventoryvalue //To take Input of inventory value 
 		 */
 		public function ced_custom_meta_inventory_save(int $post_id)
 		{
@@ -180,17 +181,18 @@ if (!class_exists('Shopcommerce_Admin')) {
 			 * @return void
 			 * @param int $post Global Variable for Post.
 			 * @param int $post->Id for getting individual Post Id.
+			 * @var int $valueforPricing  //To take Input of inventory value 
 			 */
 
 			function ced_custom_meta_pricing_html($post)
 			{
-				$valueforinventory = get_post_meta($post->ID, 'ced_metabox_pricing', true);
+				$valueforPricing = get_post_meta($post->ID, 'ced_metabox_pricing', true);
 			?> <span style="color:red" id="massage"></span>
 				<br>
 				<label for="ced_meta_box_field">Discounted Price</label>
-				<input type="number" id="ced_input_meta_discount" min="0" name="ced_input_meta_discount" value="<?php echo _e($valueforinventory['discountPrice']) ?>">
+				<input type="number" id="ced_input_meta_discount" min="0" name="ced_input_meta_discount" value="<?php echo _e($valueforPricing['discountPrice']) ?>">
 				<label for="ced_meta_box_field">Regular Price</label>
-				<input type="number" id="ced_input_meta_regular_price" min="0" name="ced_input_meta_regular_price" value="<?php echo _e($valueforinventory['regularPrice']) ?>">
+				<input type="number" id="ced_input_meta_regular_price" min="0" name="ced_input_meta_regular_price" value="<?php echo _e($valueforPricing['regularPrice']) ?>">
 
 <?php
 			}
@@ -203,7 +205,7 @@ if (!class_exists('Shopcommerce_Admin')) {
 		 * Version :1.0.0
 		 * @return void
 		 * @param int $post_id The ID of the post being saved.
-		 * @param int $finalvalue ,$discountPrice,$regularPrice for getting value of Meta Box Pricing for Product
+		 * @var int $finalvalue ,$discountPrice,$regularPrice for getting value of Meta Box Pricing for Product
 		 */
 		public function ced_custom_meta_pricing_save(int $post_id)
 		{
@@ -230,7 +232,8 @@ if (!class_exists('Shopcommerce_Admin')) {
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 * @return void
-		 * @param int $labels For All Label for Taxonomy
+		 * @var array $labels For All Label for Taxonomy
+		 * @var array $args For All Arguments for Taxonomy
 		 */
 
 		public function ced_product_taxonomy()
@@ -259,7 +262,7 @@ if (!class_exists('Shopcommerce_Admin')) {
 			register_taxonomy('ProductCategory', ['product'], $args);
 		}
 
-		// Taxonomy Function Ends Herewp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/validate.js', array('jquery'), $this->version, false);
+		// Taxonomy Function Ends Here
 
 
 
@@ -271,27 +274,25 @@ if (!class_exists('Shopcommerce_Admin')) {
 		 * Version :1.0.0
 		 * @return $content
 		 * @param int $content
-		 * @param int $loop (fetching Data from DB having a Post type "product")
+		 * @var int $wp_query (fetching Data from DB having a Post type "product")
 		 */
 
 		public function ced_shortcode_shop($content = null)
 		{
 			$wp_query = new WP_Query(array(
-				'posts_per_page' => 1,
+				'posts_per_page' => 2,
 				'post_type' => 'product',
 				'paged' => get_query_var('paged') ? get_query_var('paged') : 1
-			)); // Getting Product For Per Page Pagination
+			)); // Getting  from DB For Per Page Pagination
 			while ($wp_query->have_posts()) :
 				$wp_query->the_post();
 				$price = get_post_meta(get_the_ID(), 'ced_metabox_pricing', true);
 				$content = the_title('<h3 class="entry-title"><a href="' . get_permalink() . '">', '</a></h3>');
 				$content .= the_post_thumbnail();
 				echo "<h3>Price:$" . $price['discountPrice'] . "</h3>";
-				$content .= "<div class='entry-content'>" . the_content() . "</div>";
 			endwhile;
+			// Appending Pagination in $content
 			$content .= paginate_links(array(
-				'base'   => add_query_arg('paged', '%#%'),
-				'format' => '?paged=%#%',
 				'current' => max(1, get_query_var('paged')),
 				'total' => $wp_query->max_num_pages
 			));
@@ -304,7 +305,7 @@ if (!class_exists('Shopcommerce_Admin')) {
 		 * Description:Enqueuing Script Whenever Post Type is Product And Check Validation
 		 * @since  :1.0.0
 		 * Version :1.0.0
-		 * @param int $status 
+		 * @var int $status for current screen data
 		 * @return void
 		 */
 
@@ -314,6 +315,21 @@ if (!class_exists('Shopcommerce_Admin')) {
 			if ($status->post_type == "product") {
 				wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/validate.js', array('jquery'), $this->version, false);
 			}
+		}
+
+
+		/**
+		 * function Name : Unset Session _after_logout
+		 * Description:Unset session of cart when user will logout Session
+		 * @since  :1.0.0
+		 * Version :1.0.0
+		 * @var array $_SESSION['cedstore'] 
+		 */
+
+		function unsetSession_after_logout()
+		{
+			session_start();
+			unset($_SESSION['cedstore']);
 		}
 	}
 }

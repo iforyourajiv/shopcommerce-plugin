@@ -26,18 +26,25 @@ session_start();
  */
 get_header();
 
-if (empty($_SESSION['cedstore'])) {
+if (empty($_SESSION['cedstore']) || !isset($_SESSION['cedstore'])) {
     echo "<h1>Cart is Empty, Please Add Some Product</h1>";
 }
 
 
+// if user logged in the update immediately current Session Value on Db for Specific user
+if(is_user_logged_in(  )){
+    $user_id = get_current_user_id();
+    update_user_meta($user_id, 'ced_shopcommerce_cart', $_SESSION['cedstore']);
+}
+
+//if  User Logged in then Display Cart for the Specific User
 if (is_user_logged_in()) {
     $user_id = get_current_user_id();
     $userCart = get_user_meta($user_id, 'ced_shopcommerce_cart', 1);
-    $_SESSION['cedstore']=$userCart;
-    if (is_array($userCart) && !empty($userCart) && !empty($userCart[0])) {
+    $_SESSION['cedstore'] = $userCart;
+    if (is_array($userCart) && !empty($userCart) || !empty($userCart[0])) {
         $total = 0;
-        $html = "";//  $html variable is intialized 
+        $html = ""; //  $html variable is intialized 
         $html .= "<table>"; //Creating Table
         $html .= "<th>Product Name  </th> <th>Product Price </th>  <th>Product Quantity</th><th>Item Amount</th><th>Action</th>";
         foreach ($userCart as $element) { //Loop start for Session Variable
@@ -163,3 +170,4 @@ if (isset($_GET['decreaseqty'])) {
 get_footer();
 ?>
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
+©

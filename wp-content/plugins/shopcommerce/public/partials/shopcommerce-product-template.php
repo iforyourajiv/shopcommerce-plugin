@@ -57,6 +57,13 @@ while (have_posts()) : the_post();
         $_SESSION['cedstore'] = array();
     }
 
+
+// if user logged in the update immediately current Session Value on Db for Specific user
+    if(is_user_logged_in(  )){
+        $user_id = get_current_user_id();
+        update_user_meta($user_id, 'ced_shopcommerce_cart', $_SESSION['cedstore']);
+    }
+
     // If Anyone Click Add to Cart Button then This Block Will Run
     if (isset($_POST['ced_add_to_cart'])) { // Checking if Button is set or not
         $post_id_for_cart = $_POST['ced_post_id_forCart']; // Getting Product Id
@@ -71,9 +78,7 @@ while (have_posts()) : the_post();
                 $_SESSION['cedstore'][$element]['quantity'] += 1; //If id is match  Quantity Will Increase
                 $found = true; // Value is chamge True to False
                 echo "Product Quantity Increased"; //Printing Message
-
                 //If user is Logged In then The Session Data Will Be Update In User Meta
-
                 if (is_user_logged_in()) {
                     $user_id = get_current_user_id();
                     update_user_meta($user_id, 'ced_shopcommerce_cart', $_SESSION['cedstore']);
@@ -84,15 +89,11 @@ while (have_posts()) : the_post();
             //Creating a array for adding Product in Array
             $item = array('id' => $post_id_for_cart, 'product_name' =>   $ced_product_name, 'product_price' =>  $ced_product_price, 'quantity' => $quantity);
             array_push($_SESSION['cedstore'], $item); // Push the current array in Session Array
-
             //If user is Logged In then new User Meta will created and Session Data Will Be Store in Permanently In User Meta 
             if (is_user_logged_in()) {
                 $user_id = get_current_user_id();
                 add_user_meta($user_id, 'ced_shopcommerce_cart', '', 1);
                 $userCart = get_user_meta($user_id, 'ced_shopcommerce_cart', 1);
-                if (is_array($userCart) && !empty($userCart) && !empty($userCart[0])) {
-                    $_SESSION['cedstore'] = $userCart;
-                }
                 update_user_meta($user_id, 'ced_shopcommerce_cart', $_SESSION['cedstore']);
             }
             echo "Product Added In Cart";

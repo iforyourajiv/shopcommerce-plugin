@@ -83,7 +83,8 @@ if (!class_exists('Shopcommerce_Public')) {
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 * @return $template
-		 * @param, int $pagename (For Fetching Page Name)
+		 * @param  $template 
+		 * @var, int $pagename (For Fetching Page Name)
 		 */
 
 
@@ -96,6 +97,8 @@ if (!class_exists('Shopcommerce_Public')) {
 			}
 			return $template;
 		}
+
+
 
 		// my_custom_template_for_cart_product_page Ends Here
 	}

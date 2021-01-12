@@ -156,21 +156,20 @@ class Shopcommerce
 
 		$plugin_admin = new Shopcommerce_Admin($this->get_plugin_name(), $this->get_version());
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'product_admin_script');
-		// Creating Custom Post Type Having a Name with 'Product'
+		// Creating Custom Post Type Having a Name with 'Product' using init hook
 		$this->loader->add_action('init', $plugin_admin, 'ced_customPost_Product');
-		//Adding Meta-Box Inventory for Product
+		//Adding Meta-Box Inventory for Product using add_meta_box hook
 		$this->loader->add_action('add_meta_boxes', $plugin_admin, 'ced_custom_meta_inventory');
-		//Saving Meta-box Inventory Value for Product
+		//Saving Meta-box Inventory Value for Product using save_post hook 
 		$this->loader->add_action('save_post', $plugin_admin, 'ced_custom_meta_inventory_save');
-		//Adding Meta-Box Pricing for Product
+		//Adding Meta-Box Pricing for Product using add_meta_box hook
 		$this->loader->add_action('add_meta_boxes', $plugin_admin, 'ced_custom_meta_pricing');
-		//Saving Meta-box Pricing Value for Product
+		//Saving Meta-box Pricing Value for Product using save_post hook 
 		$this->loader->add_action('save_post', $plugin_admin, 'ced_custom_meta_pricing_save');
-		//Adding Custom Taxonomy For Product
+		//Adding Custom Taxonomy For Product using init hook
 		$this->loader->add_action('init', $plugin_admin, 'ced_product_taxonomy');
-	
-
-		
+		//Adding Function for Deleting Session  when user will log out using wp_logout hook
+		$this->loader->add_action('wp_logout', $plugin_admin, 'unsetSession_after_logout');
 	}
 
 	/**
