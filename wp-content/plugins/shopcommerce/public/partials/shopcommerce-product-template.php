@@ -36,7 +36,16 @@ while (have_posts()) : the_post();
 
     <h1 class="title"><a href="<?php the_permalink(); ?>"><?php the_title() ?></a></h1>
     <?php the_post_thumbnail();
-    $price = get_post_meta($id, 'ced_metabox_pricing', true);
+    $price = get_post_meta($id, 'ced_metabox_pricing', true); //
+    $inventory = get_post_meta($id, 'ced_metabox_inventory', true);
+
+    $inputButtonForAddToCart = ''; //Variable intialized
+
+    if ($inventory <= 0) { //if inventory less then or equal to 0
+        $inputButtonForAddToCart = "<input type='button' value='Sold OUT'>";
+    } else {  //Else Inventory greater the 0
+        $inputButtonForAddToCart = " <input type='submit' name='ced_add_to_cart' value='Add To cart'>";
+    }
     ?>
     <h2>Price $<?php echo $price['discountPrice']; ?></h2>
     <div class="entry">
@@ -45,7 +54,8 @@ while (have_posts()) : the_post();
                                 ?>
     <form action="" method="post">
         <input type="hidden" name="ced_post_id_forCart" value="<?php echo $id ?>">
-        <input type="submit" name="ced_add_to_cart" value="Add To cart">
+        <!-- Printing input button -->
+        <?php echo $inputButtonForAddToCart ?>
         <br>
         <br>
     </form>
@@ -58,8 +68,8 @@ while (have_posts()) : the_post();
     }
 
 
-// if user logged in the update immediately current Session Value on Db for Specific user
-    if(is_user_logged_in(  )){
+    // if user logged in the update immediately current Session Value on Db for Specific user
+    if (is_user_logged_in()) {
         $user_id = get_current_user_id();
         update_user_meta($user_id, 'ced_shopcommerce_cart', $_SESSION['cedstore']);
     }
