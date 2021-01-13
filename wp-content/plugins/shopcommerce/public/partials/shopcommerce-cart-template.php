@@ -25,11 +25,17 @@ session_start();
  */
 get_header();
 
+
 echo $_SESSION['message'];
+$_SESSION['message'] = "";
+
+//If Session Varibale is Empty or Not Set then Print Some Data on Page
 if (empty($_SESSION['cedstore']) || !isset($_SESSION['cedstore'])) {
-    echo "<h1>Cart is Empty, Please Add Some Product</h1>";
+    echo "<h1>Cart is Empty, Please Add Some Product</h1> <br>
+            <a href='shop'><button id='continue'>Continue Shopping</button></a>";
 }
 
+// Deprecated 
 if (is_user_logged_in()) {
     $user_id = get_current_user_id();
     $userCart = get_user_meta($user_id, 'ced_shopcommerce_cart', 1);
@@ -79,7 +85,7 @@ if (is_user_logged_in()) {
         // echo "<h1>Cart is Empty, Please Add Some Product</h1>";
     }
 } else {
-    if (!isset($_SESSION['cedstore'])) {
+    if (!isset($_SESSION['cedstore']) || empty($_SESSION['cedstore'])) {
         echo "";
     } else {
         $total = 0;

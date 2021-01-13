@@ -85,13 +85,19 @@ while (have_posts()) : the_post();
         $found = false;
         foreach ($_SESSION['cedstore'] as $element => $data) { // Runing Loop for checking Uniqeness of Product
             if ($data['id'] == $post_id_for_cart) { // Matching Array Id with Post Id
-                $_SESSION['cedstore'][$element]['quantity'] += 1; //If id is match  Quantity Will Increase
-                $found = true; // Value is chamge True to False
-                echo "Product Quantity Increased"; //Printing Message
-                //If user is Logged In then The Session Data Will Be Update In User Meta
-                if (is_user_logged_in()) {
-                    $user_id = get_current_user_id();
-                    update_user_meta($user_id, 'ced_shopcommerce_cart', $_SESSION['cedstore']);
+                $inventory = get_post_meta($post_id_for_cart, 'ced_metabox_inventory', true);
+                if ($_SESSION['cedstore'][$element]['quantity'] < $inventory) {
+                    $_SESSION['cedstore'][$element]['quantity'] += 1; //If id is match  Quantity Will Increase
+                    $found = true; // Value is chamge True to False
+                    echo "Product Quantity Increased"; //Printing Message
+                    //If user is Logged In then The Session Data Will Be Update In User Meta
+                    if (is_user_logged_in()) {
+                        $user_id = get_current_user_id();
+                        update_user_meta($user_id, 'ced_shopcommerce_cart', $_SESSION['cedstore']);
+                    }
+                } else {
+                    echo "OUT Of  STock";
+                    $found = true;
                 }
             }
         }

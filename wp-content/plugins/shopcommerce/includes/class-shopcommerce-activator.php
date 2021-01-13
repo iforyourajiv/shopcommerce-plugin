@@ -94,7 +94,7 @@ class Shopcommerce_Activator
 		}
 
 
-		
+
 		/**
 		 * creating_table_for_order
 		 * Description : Using This Function We are Creating New Table For Order Detail in Database
@@ -106,24 +106,25 @@ class Shopcommerce_Activator
 		 * @var $charset_collate    for Charset
 		 * @var $sql 				Creating a New Table in Db 
 		 */
-	
-			global $wpdb;
 
-			$table_name = $wpdb->prefix . 'ced_orderDetail';
-			$charset_collate = $wpdb->get_charset_collate();
+		global $wpdb;
 
-			$sql = "CREATE TABLE $table_name (
+		$table_name = $wpdb->prefix . 'ced_orderDetail';
+		$charset_collate = $wpdb->get_charset_collate();
+
+		$sql = "CREATE TABLE $table_name (
 					order_id int(9) NOT NULL AUTO_INCREMENT,
-					user_id int(200) NOT NULL,
+					user_id varchar(50) NOT NULL,
 					customer_detail longtext NOT NULL,
+					shipping_detail longtext NOT NULL,
 					order_detail longtext NOT NULL,
 					total_amount int(200) NOT NULL,
+					payment_method varchar(50) NOT NULL,
 					time timestamp NOT NULL,
 					PRIMARY KEY  (order_id)
 					) $charset_collate";
 
-			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-			dbDelta($sql);
-		
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+		dbDelta($sql);
 	}
 }

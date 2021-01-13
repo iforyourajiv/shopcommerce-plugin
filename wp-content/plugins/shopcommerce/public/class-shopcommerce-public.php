@@ -57,9 +57,15 @@ if (!class_exists('Shopcommerce_Public')) {
 			$this->version = $version;
 		}
 
-
+		//Enqueuing Style For Template
 		public function enqueue_styles() {
 			wp_enqueue_style( 'ced-plugin-css', plugin_dir_url( __FILE__ ) . 'css/style.css', array(), $this->version, 'all' );
+		}
+		//Enqueuing Script For Template
+		public function enqueue_scripts() {
+	
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/fillformcheckout.js', array( 'jquery' ), $this->version, false );
+	
 		}
 
 		/**
@@ -151,5 +157,24 @@ if (!class_exists('Shopcommerce_Public')) {
 		}
 
 		//  my_custom_template_for_thankyou_product_page Ends Here
+
+
+		function save_order_detail($user_id,$customer_detail_encoded,$shipping_detail_encoded,$order_detail_encoded,$total_amount,$payment_method){
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'ced_orderDetail';
+		$wpdb->insert(
+			$table_name,
+			array(
+				"user_id"=>$user_id,
+				"customer_detail"=>$customer_detail_encoded,
+				"shipping_detail"=>$shipping_detail_encoded,
+				"order_detail"=>$order_detail_encoded,
+				"total_amount"=>$total_amount,
+				"payment_method"=>$payment_method
+			)
+		);
+		return true;
+		
 	}
+}
 }

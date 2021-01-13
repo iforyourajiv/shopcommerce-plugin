@@ -36,6 +36,7 @@ if (!defined('WPINC')) {
  * Rename this for your plugin and update it as you release new versions.
  */
 define('SHOPCOMMERCE_VERSION', '1.0.0');
+define('PLUGIN_DIRPATH', plugin_dir_path(__FILE__));
 
 /**
  * The code that runs during plugin activation.
