@@ -194,7 +194,7 @@ if (!class_exists('Shopcommerce_Admin')) {
 				<label for="ced_meta_box_field">Regular Price</label>
 				<input type="number" id="ced_input_meta_regular_price" min="0" name="ced_input_meta_regular_price" value="<?php echo _e($valueforPricing['regularPrice']) ?>">
 
-<?php
+			<?php
 			}
 		}
 
@@ -265,8 +265,6 @@ if (!class_exists('Shopcommerce_Admin')) {
 		// Taxonomy Function Ends Here
 
 
-
-
 		/**
 		 * function Name :ced_shortcode_shop
 		 * Description:Creating Short code for displaying the products in shop Page
@@ -330,6 +328,62 @@ if (!class_exists('Shopcommerce_Admin')) {
 		{
 			session_start();
 			unset($_SESSION['cedstore']);
+		}
+
+
+		/**
+		 * ced_order_menu
+		 * Description : Adding Menu For Showing Orders List Using WP-List Table
+		 * @return void
+		 */
+		function ced_order_menu()
+		{
+			add_menu_page(
+				"Orders", // Menu Title
+				"Orders", // Menu Name
+				'manage_options', //Capabilities
+				"order-menu", //Slug
+				"ced_order_menu_html", //Function
+				"dashicons-products", //Icon
+				30
+			);
+
+
+
+			/**
+			 * ced_order_menu_html
+			 *	Description : Callback Function having Some html with wp-list-table For Order Menu 
+			 * @return void
+			 * @var	$obj //Object for Class Ced_order_List
+			 */
+			function ced_order_menu_html()
+			{
+				include_once PLUGIN_DIRPATH . "admin/class-showDataorder-wp-list-table.php";
+				$obj = new Ced_order_List();
+			?>
+				<div class="wrap">
+					<h2>All Orders</h2>
+
+					<div id="poststuff">
+						<div id="post-body" class="metabox-holder columns-4">
+							<div id="post-body-content">
+								<div class="meta-box-sortables ui-sortable">
+									<form method="post">
+										<?php
+
+										$obj->prepare_items();
+										$obj->display();
+
+										?>
+									</form>
+								</div>
+							</div>
+						</div>
+						<br class="clear">
+					</div>
+				</div>
+<?php
+			}
 		}
 	}
 }

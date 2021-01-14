@@ -158,6 +158,8 @@ class Shopcommerce
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'product_admin_script');
 		// Creating Custom Post Type Having a Name with 'Product' using init hook
 		$this->loader->add_action('init', $plugin_admin, 'ced_customPost_Product');
+		// Creating New Menu Having a Name with 'Orders' using admin_menu hook
+		$this->loader->add_action('admin_menu',$plugin_admin,'ced_order_menu');
 		//Adding Meta-Box Inventory for Product using add_meta_box hook
 		$this->loader->add_action('add_meta_boxes', $plugin_admin, 'ced_custom_meta_inventory');
 		//Saving Meta-box Inventory Value for Product using save_post hook 
@@ -170,6 +172,7 @@ class Shopcommerce
 		$this->loader->add_action('init', $plugin_admin, 'ced_product_taxonomy');
 		//Adding Function for Deleting Session  when user will log out using wp_logout hook
 		$this->loader->add_action('wp_logout', $plugin_admin, 'unsetSession_after_logout');
+		
 	}
 
 	/**
@@ -193,6 +196,7 @@ class Shopcommerce
 		$this->loader->add_action('template_include', $plugin_public, 'my_custom_template_for_checkout_product_page');
 		//Including Our Own Template For thankyou  Page In Theme 
 		$this->loader->add_action('template_include', $plugin_public, 'my_custom_template_for_thankyou_product_page');
+		
 	}
 
 	/**

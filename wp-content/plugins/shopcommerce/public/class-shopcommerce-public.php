@@ -159,7 +159,7 @@ if (!class_exists('Shopcommerce_Public')) {
 
 		//  my_custom_template_for_thankyou_product_page Ends Here
 
-		
+
 		/**
 		 * save_order_detail
 		 *	Description : This Function is Taking Parameters from Checkout Page And Saving Data into Database
