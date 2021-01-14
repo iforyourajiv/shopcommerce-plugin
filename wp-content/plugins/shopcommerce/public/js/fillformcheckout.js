@@ -19,5 +19,7 @@
         $("#state_billing").val("");
       }
     });
+
   });
 })(jQuery);
+
