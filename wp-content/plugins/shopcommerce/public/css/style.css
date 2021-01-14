@@ -5,9 +5,9 @@ h3 {
   color: green !important;
 }
 
-h1{
-    color:#E64D00 !important;
-    font-size: 24px!important;
+h1 {
+  color: #e64d00 !important;
+  font-size: 24px !important;
 }
 
 #form {
@@ -21,7 +21,6 @@ h1{
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
 }
-
 
 #cartitem td,
 #cartitem th {
@@ -45,43 +44,40 @@ h1{
   color: white;
 }
 
-
-#total_amount{
+#total_amount {
   color: chocolate;
 }
 
-#place_order{
- 
+#place_order {
   margin-top: 10px;
   padding-left: 40px;
   padding-right: 40px;
 }
 
-#continue{
+#continue {
   margin-bottom: 10px;
   padding-left: 40px;
   padding-right: 40px;
 }
 
-
-.site-header__title{
+.site-header__title {
   text-align: center;
   font-size: 90px !important;
 }
 
-.site-header__subtitle{
+.site-header__subtitle {
   text-align: center;
   font-size: 65px !important;
 }
 
-.main-content{
+.main-content {
   margin-top: -47px;
   text-align: center;
-  top:-10;
+  top: -10;
   font-size: 90px !important;
-  color:green !important;
+  color: green !important;
 }
 
-.btn-cotinue{
+.btn-cotinue {
   text-align: center;
 }

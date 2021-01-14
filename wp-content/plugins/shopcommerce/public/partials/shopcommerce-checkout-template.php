@@ -213,7 +213,7 @@ if (isset($_POST['ced_place_order'])) {
             }
         }
     } else { // If Guest Wants to purchase some data
-        $user_id ='guest';
+        $user_id = 'guest';
         $customer_detail_encoded = json_encode($customer_detail); //encoding in json
         $shipping_detail_encoded = json_encode($shipping_detail); //encoding in json
         $order_detail_encoded = json_encode($_SESSION['cedstore']); //encoding in json
