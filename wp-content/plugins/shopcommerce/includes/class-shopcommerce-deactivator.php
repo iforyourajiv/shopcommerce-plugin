@@ -31,7 +31,7 @@ class Shopcommerce_Deactivator {
 	 */
 	public static function deactivate() {
 
-		wp_delete_post('Shop',1);
+		wp_delete_post('Shop', 1);
 
 	}
 

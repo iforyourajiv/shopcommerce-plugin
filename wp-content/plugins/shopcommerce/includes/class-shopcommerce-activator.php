@@ -20,18 +20,18 @@
  * @subpackage Shopcommerce/includes
  * @author     Cedcommerce <rajivranjanshrivastav@cedcoss.com>
  */
-class Shopcommerce_Activator
-{
+class Shopcommerce_Activator {
+
 
 	/**
 	 * function name : Activate
 	 * Short Description. Creating New Page as Well As New Table in Db When Plugin Will Be Activated
 	 * Version :1.0.0
+	 *
 	 * @since  :1.0.0
 	 * @return void
 	 */
-	public static function activate()
-	{
+	public static function activate() {
 		// Creating new Page "Shop" when Plugin Activated
 		$page = get_page_by_title('Shop');
 		if (!$page) {
@@ -99,6 +99,7 @@ class Shopcommerce_Activator
 		 * creating_table_for_order
 		 * Description : Using This Function We are Creating New Table For Order Detail in Database
 		 * Version :1.0.0
+		 *
 		 * @since  :1.0.0
 		 * @return void
 		 * @var $wpdb               Global variable
@@ -109,7 +110,7 @@ class Shopcommerce_Activator
 
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'ced_orderDetail';
+		$table_name      = $wpdb->prefix . 'ced_orderDetail';
 		$charset_collate = $wpdb->get_charset_collate();
 
 		$sql = "CREATE TABLE $table_name (
@@ -124,7 +125,7 @@ class Shopcommerce_Activator
 					PRIMARY KEY  (order_id)
 					) $charset_collate";
 
-		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta($sql);
 	}
 }

@@ -7,6 +7,7 @@
     var regularvalue = $("#ced_input_meta_regular_price").val();
     var inventory = $("#ced_input_meta_inventory").val();
 
+
     if(parseInt(inventory)<0){
       var check='negative';
     }

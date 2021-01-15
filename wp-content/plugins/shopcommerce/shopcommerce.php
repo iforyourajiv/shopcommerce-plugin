@@ -42,8 +42,7 @@ define('PLUGIN_DIRPATH', plugin_dir_path(__FILE__));
  * The code that runs during plugin activation.
  * This action is documented in includes/class-shopcommerce-activator.php
  */
-function activate_shopcommerce()
-{
+function activate_shopcommerce() {
 	require_once plugin_dir_path(__FILE__) . 'includes/class-shopcommerce-activator.php';
 	Shopcommerce_Activator::activate();
 }
@@ -52,8 +51,7 @@ function activate_shopcommerce()
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-shopcommerce-deactivator.php
  */
-function deactivate_shopcommerce()
-{
+function deactivate_shopcommerce() {
 	require_once plugin_dir_path(__FILE__) . 'includes/class-shopcommerce-deactivator.php';
 	Shopcommerce_Deactivator::deactivate();
 }
@@ -76,8 +74,7 @@ require plugin_dir_path(__FILE__) . 'includes/class-shopcommerce.php';
  *
  * @since    1.0.0
  */
-function run_shopcommerce()
-{
+function run_shopcommerce() {
 
 	$plugin = new Shopcommerce();
 	$plugin->run();

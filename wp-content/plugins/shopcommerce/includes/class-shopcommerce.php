@@ -27,8 +27,8 @@
  * @subpackage Shopcommerce/includes
  * @author     Cedcommerce <rajivranjanshrivastav@cedcoss.com>
  */
-class Shopcommerce
-{
+class Shopcommerce {
+
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -67,8 +67,7 @@ class Shopcommerce
 	 *
 	 * @since    1.0.0
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		if (defined('SHOPCOMMERCE_VERSION')) {
 			$this->version = SHOPCOMMERCE_VERSION;
 		} else {
@@ -98,8 +97,7 @@ class Shopcommerce
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function load_dependencies()
-	{
+	private function load_dependencies() {
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
@@ -136,8 +134,7 @@ class Shopcommerce
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function set_locale()
-	{
+	private function set_locale() {
 
 		$plugin_i18n = new Shopcommerce_i18n();
 
@@ -151,15 +148,14 @@ class Shopcommerce
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_admin_hooks()
-	{
+	private function define_admin_hooks() {
 
 		$plugin_admin = new Shopcommerce_Admin($this->get_plugin_name(), $this->get_version());
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'product_admin_script');
 		// Creating Custom Post Type Having a Name with 'Product' using init hook
 		$this->loader->add_action('init', $plugin_admin, 'ced_customPost_Product');
 		// Creating New Menu Having a Name with 'Orders' using admin_menu hook
-		$this->loader->add_action('admin_menu',$plugin_admin,'ced_order_menu');
+		$this->loader->add_action('admin_menu', $plugin_admin, 'ced_order_menu');
 		//Adding Meta-Box Inventory for Product using add_meta_box hook
 		$this->loader->add_action('add_meta_boxes', $plugin_admin, 'ced_custom_meta_inventory');
 		//Saving Meta-box Inventory Value for Product using save_post hook 
@@ -182,8 +178,7 @@ class Shopcommerce
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_public_hooks()
-	{
+	private function define_public_hooks() {
 
 		$plugin_public = new Shopcommerce_Public($this->get_plugin_name(), $this->get_version());
 		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
@@ -204,8 +199,7 @@ class Shopcommerce
 	 *
 	 * @since    1.0.0
 	 */
-	public function run()
-	{
+	public function run() {
 		$this->loader->run();
 	}
 
@@ -216,8 +210,7 @@ class Shopcommerce
 	 * @since     1.0.0
 	 * @return    string    The name of the plugin.
 	 */
-	public function get_plugin_name()
-	{
+	public function get_plugin_name() {
 		return $this->plugin_name;
 	}
 
@@ -227,8 +220,7 @@ class Shopcommerce
 	 * @since     1.0.0
 	 * @return    Shopcommerce_Loader    Orchestrates the hooks of the plugin.
 	 */
-	public function get_loader()
-	{
+	public function get_loader() {
 		return $this->loader;
 	}
 
@@ -238,8 +230,7 @@ class Shopcommerce
 	 * @since     1.0.0
 	 * @return    string    The version number of the plugin.
 	 */
-	public function get_version()
-	{
+	public function get_version() {
 		return $this->version;
 	}
 }

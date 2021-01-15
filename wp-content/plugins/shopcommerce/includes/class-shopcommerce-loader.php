@@ -25,6 +25,7 @@ class Shopcommerce_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.
+	 *
 	 * @since    1.0.0
 	 * @access   protected
 	 * @var      array    $actions    The actions registered with WordPress to fire when the plugin loads.
@@ -33,6 +34,7 @@ class Shopcommerce_Loader {
 
 	/**
 	 * The array of filters registered with WordPress.
+	 *
 	 * @since    1.0.0
 	 * @access   protected
 	 * @var      array    $filters    The filters registered with WordPress to fire when the plugin loads.

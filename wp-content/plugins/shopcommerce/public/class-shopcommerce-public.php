@@ -22,8 +22,8 @@
  */
 
 if (!class_exists('Shopcommerce_Public')) {
-	class Shopcommerce_Public
-	{
+	class Shopcommerce_Public {
+	
 
 		/**
 		 * The ID of this plugin.
@@ -50,21 +50,18 @@ if (!class_exists('Shopcommerce_Public')) {
 		 * @param      string    $plugin_name       The name of the plugin.
 		 * @param      string    $version    The version of this plugin.
 		 */
-		public function __construct($plugin_name, $version)
-		{
+		public function __construct( $plugin_name, $version) {
 
 			$this->plugin_name = $plugin_name;
-			$this->version = $version;
+			$this->version     = $version;
 		}
 
 		//Enqueuing Style For Template
-		public function enqueue_styles()
-		{
+		public function enqueue_styles() {
 			wp_enqueue_style('ced-plugin-css', plugin_dir_url(__FILE__) . 'css/style.css', array(), $this->version, 'all');
 		}
 		//Enqueuing Script For Template
-		public function enqueue_scripts()
-		{
+		public function enqueue_scripts() {
 
 			wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/fillformcheckout.js', array('jquery'), $this->version, false);
 		}
@@ -72,14 +69,14 @@ if (!class_exists('Shopcommerce_Public')) {
 		/**
 		 * function Name :my_custom_template_for_single_product_page
 		 * Description: Adding Our Own Custom Theme Path Whenever We Will Get Single.php with sepecific Type
+		 *
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 * @return $template
 		 * @param, int $template
 		 */
 
-		function my_custom_template_for_single_product_page($template)
-		{
+		function my_custom_template_for_single_product_page( $template) {
 			$post_type = 'product';
 			if (is_singular($post_type)) {
 				$template = dirname(__FILE__) . '/partials/shopcommerce-product-template.php';
@@ -92,6 +89,7 @@ if (!class_exists('Shopcommerce_Public')) {
 		/**
 		 * function Name :my_custom_template_for_cart_product_page
 		 * Description: Adding Our Own Custom Theme Path Whenever We Will Get Cart Page
+		 *
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 * @return $template
@@ -100,8 +98,7 @@ if (!class_exists('Shopcommerce_Public')) {
 		 */
 
 
-		function my_custom_template_for_cart_product_page($template)
-		{
+		function my_custom_template_for_cart_product_page( $template) {
 
 			$pagename = get_query_var('pagename');
 			if ($pagename == 'cart') {
@@ -116,6 +113,7 @@ if (!class_exists('Shopcommerce_Public')) {
 		/**
 		 * function Name :my_custom_template_for_checkout_product_page
 		 * Description: Adding Our Own Custom Theme Path Whenever We Will Get Checkout Page
+		 *
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 * @return $template
@@ -124,8 +122,7 @@ if (!class_exists('Shopcommerce_Public')) {
 		 */
 
 
-		function my_custom_template_for_checkout_product_page($template)
-		{
+		function my_custom_template_for_checkout_product_page( $template) {
 
 			$pagename = get_query_var('pagename');
 			if ($pagename == 'checkout') {
@@ -139,6 +136,7 @@ if (!class_exists('Shopcommerce_Public')) {
 		/**
 		 * function Name :my_custom_template_for_thankyou_product_page
 		 * Description: Adding Our Own Custom Theme Path Whenever We Will Get Checkout Page
+		 *
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 * @return $template
@@ -147,8 +145,7 @@ if (!class_exists('Shopcommerce_Public')) {
 		 */
 
 
-		function my_custom_template_for_thankyou_product_page($template)
-		{
+		function my_custom_template_for_thankyou_product_page( $template) {
 
 			$pagename = get_query_var('pagename');
 			if ($pagename == 'thankyou') {
@@ -163,6 +160,7 @@ if (!class_exists('Shopcommerce_Public')) {
 		/**
 		 * save_order_detail
 		 *	Description : This Function is Taking Parameters from Checkout Page And Saving Data into Database
+		 *
 		 * @param   $user_id
 		 * @param   $customer_detail_encoded
 		 * @param   $shipping_detail_encoded
@@ -173,19 +171,18 @@ if (!class_exists('Shopcommerce_Public')) {
 		 * @var		$table_name
 		 * @return true
 		 */
-		function save_order_detail($user_id, $customer_detail_encoded, $shipping_detail_encoded, $order_detail_encoded, $total_amount, $payment_method)
-		{
+		function save_order_detail( $user_id, $customer_detail_encoded, $shipping_detail_encoded, $order_detail_encoded, $total_amount, $payment_method) {
 			global $wpdb;
 			$table_name = $wpdb->prefix . 'ced_orderDetail';
 			$wpdb->insert(
 				$table_name,
 				array(
-					"user_id" => $user_id,
-					"customer_detail" => $customer_detail_encoded,
-					"shipping_detail" => $shipping_detail_encoded,
-					"order_detail" => $order_detail_encoded,
-					"total_amount" => $total_amount,
-					"payment_method" => $payment_method
+					'user_id' => $user_id,
+					'customer_detail' => $customer_detail_encoded,
+					'shipping_detail' => $shipping_detail_encoded,
+					'order_detail' => $order_detail_encoded,
+					'total_amount' => $total_amount,
+					'payment_method' => $payment_method
 				)
 			);
 			return true;

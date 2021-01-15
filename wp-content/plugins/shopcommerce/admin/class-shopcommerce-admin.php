@@ -22,8 +22,8 @@
  */
 
 if (!class_exists('Shopcommerce_Admin')) {
-	class Shopcommerce_Admin
-	{
+	class Shopcommerce_Admin {
+	
 
 		/**
 		 * The ID of this plugin.
@@ -50,11 +50,10 @@ if (!class_exists('Shopcommerce_Admin')) {
 		 * @param      string    $plugin_name       The name of this plugin.
 		 * @param      string    $version    The version of this plugin.
 		 */
-		public function __construct($plugin_name, $version)
-		{
+		public function __construct( $plugin_name, $version) {
 
 			$this->plugin_name = $plugin_name;
-			$this->version = $version;
+			$this->version     = $version;
 			// Adding Shortcode For Shop Page
 			add_shortcode('ced_shop_content', array($this, 'ced_shortcode_shop'));
 		}
@@ -62,12 +61,12 @@ if (!class_exists('Shopcommerce_Admin')) {
 		/**
 		 * function Name :ced_customPost_Product
 		 * Description. Creating New Post Type Having a name with 'Product'
+		 *
 		 * @return void
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 */
-		public function ced_customPost_Product()
-		{
+		public function ced_customPost_Product() {
 			register_post_type(
 				'Product',
 				// CPT Options
@@ -75,8 +74,8 @@ if (!class_exists('Shopcommerce_Admin')) {
 					'labels' => array(
 						'name' => __('Products'),
 						'singular_name' => __('Product'),
-						'edit_item'          => ('Edit Product'),
-						'add_new'        => ('Add New Product'),
+						'edit_item'          => ( 'Edit Product' ),
+						'add_new'        => ( 'Add New Product' ),
 						'search_items'        => __('Search Product'),
 					),
 					'public' => true,
@@ -95,12 +94,12 @@ if (!class_exists('Shopcommerce_Admin')) {
 		/**
 		 * function Name :ced_custom_meta_inventory
 		 * Description. Creating New Meta Box  Having a name with 'Inventory' For Product Post Type
+		 *
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 * @return void
 		 */
-		public function ced_custom_meta_inventory()
-		{
+		public function ced_custom_meta_inventory() {
 			add_meta_box(
 				'ced_metabox_inventory',          // Unique ID
 				'Inventory', // Box title
@@ -113,6 +112,7 @@ if (!class_exists('Shopcommerce_Admin')) {
 			/**
 			 * function Name :ced_custom_meta_inventory_html
 			 * Description. HTML for ced_custom_meta_inventory
+			 *
 			 * @since  :1.0.0
 			 * Version :1.0.0
 			 * @return void
@@ -120,13 +120,12 @@ if (!class_exists('Shopcommerce_Admin')) {
 			 * @param int $post->Id for getting individual Post Id.
 			 */
 
-			function ced_custom_meta_inventory_html($post)
-			{
+			function ced_custom_meta_inventory_html( $post) {
 				$valueforinventory = get_post_meta($post->ID, 'ced_metabox_inventory', true);
-?>
+				?>
 				<span style="color:red" id="massageinventory"></span>
 				<label for="ced_meta_box_field">Inventory</label>
-				<input type="number" id="ced_input_meta_inventory" min="0" name="ced_input_meta_inventory" value="<?php echo _e($valueforinventory) ?>">
+				<input type="number" id="ced_input_meta_inventory" min="0" name="ced_input_meta_inventory" value="<?php echo _e($valueforinventory); ?>">
 			<?php
 			}
 		}
@@ -134,14 +133,14 @@ if (!class_exists('Shopcommerce_Admin')) {
 		/**
 		 * function Name :ced_custom_meta_inventory_save
 		 * Description:Saving Data for ced_custom_meta_inventory
+		 *
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 * @return void
 		 * @param int $post_id  //The ID of the post being saved.
 		 * @var int $inventoryvalue //To take Input of inventory value 
 		 */
-		public function ced_custom_meta_inventory_save(int $post_id)
-		{
+		public function ced_custom_meta_inventory_save( int $post_id) {
 			$inventoryvalue = empty($_POST['ced_input_meta_inventory']) ? 0 : $_POST['ced_input_meta_inventory'];
 			if (array_key_exists('ced_input_meta_inventory', $_POST)) {
 				update_post_meta(
@@ -158,12 +157,12 @@ if (!class_exists('Shopcommerce_Admin')) {
 		/**
 		 * function Name :ced_custom_meta_pricing
 		 * Description. Creating New Meta Box  Having a name with 'Pricing' For Product Post Type
+		 *
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 * @return void
 		 */
-		public function ced_custom_meta_pricing()
-		{
+		public function ced_custom_meta_pricing() {
 			add_meta_box(
 				'ced_metabox_pricing',          // Unique ID
 				'Price', // Box title
@@ -176,6 +175,7 @@ if (!class_exists('Shopcommerce_Admin')) {
 			/**
 			 * function Name :ced_custom_meta_pricing_html
 			 * Description. HTML for ced_custom_meta_pricing_html
+			 *
 			 * @since  :1.0.0
 			 * Version :1.0.0
 			 * @return void
@@ -184,15 +184,15 @@ if (!class_exists('Shopcommerce_Admin')) {
 			 * @var int $valueforPricing  //To take Input of inventory value 
 			 */
 
-			function ced_custom_meta_pricing_html($post)
-			{
+			function ced_custom_meta_pricing_html( $post) {
 				$valueforPricing = get_post_meta($post->ID, 'ced_metabox_pricing', true);
-			?> <span style="color:red" id="massage"></span>
+				?>
+			 <span style="color:red" id="massage"></span>
 				<br>
 				<label for="ced_meta_box_field">Discounted Price</label>
-				<input type="number" id="ced_input_meta_discount" min="0" name="ced_input_meta_discount" value="<?php echo _e($valueforPricing['discountPrice']) ?>">
+				<input type="number" id="ced_input_meta_discount" min="0" name="ced_input_meta_discount" value="<?php echo _e($valueforPricing['discountPrice']); ?>">
 				<label for="ced_meta_box_field">Regular Price</label>
-				<input type="number" id="ced_input_meta_regular_price" min="0" name="ced_input_meta_regular_price" value="<?php echo _e($valueforPricing['regularPrice']) ?>">
+				<input type="number" id="ced_input_meta_regular_price" min="0" name="ced_input_meta_regular_price" value="<?php echo _e($valueforPricing['regularPrice']); ?>">
 
 			<?php
 			}
@@ -201,18 +201,18 @@ if (!class_exists('Shopcommerce_Admin')) {
 		/**
 		 * function Name :ced_custom_meta_inventory_save
 		 * Description:Saving Data for ced_custom_meta_inventory
+		 *
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 * @return void
 		 * @param int $post_id The ID of the post being saved.
 		 * @var int $finalvalue ,$discountPrice,$regularPrice for getting value of Meta Box Pricing for Product
 		 */
-		public function ced_custom_meta_pricing_save(int $post_id)
-		{
-			$finalvalue = array();
+		public function ced_custom_meta_pricing_save( int $post_id) {
+			$finalvalue    = array();
 			$discountPrice = isset($_POST['ced_input_meta_discount']) ? $_POST['ced_input_meta_discount'] : 0;
-			$regularPrice = isset($_POST['ced_input_meta_regular_price']) ? $_POST['ced_input_meta_regular_price'] : 0;
-			$finalvalue = array('discountPrice' => $discountPrice, 'regularPrice' => $regularPrice);
+			$regularPrice  = isset($_POST['ced_input_meta_regular_price']) ? $_POST['ced_input_meta_regular_price'] : 0;
+			$finalvalue    = array('discountPrice' => $discountPrice, 'regularPrice' => $regularPrice);
 
 			if (array_key_exists('ced_input_meta_discount', $_POST)) {
 				update_post_meta(
@@ -224,11 +224,12 @@ if (!class_exists('Shopcommerce_Admin')) {
 		}
 
 
-		// MetaBox Functions Ends Here 
+		// MetaBox Functions Ends Here
 
 		/**
 		 * function Name :ced_product_taxonomy
 		 * Description:Creating Taxonomy For Product 
+		 *
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 * @return void
@@ -236,8 +237,7 @@ if (!class_exists('Shopcommerce_Admin')) {
 		 * @var array $args For All Arguments for Taxonomy
 		 */
 
-		public function ced_product_taxonomy()
-		{
+		public function ced_product_taxonomy() {
 			$labels = array(
 				'name'              => __('Product_Category'),
 				'singular_name'     => __('Product_Category'),
@@ -268,6 +268,7 @@ if (!class_exists('Shopcommerce_Admin')) {
 		/**
 		 * function Name :ced_shortcode_shop
 		 * Description:Creating Short code for displaying the products in shop Page
+		 *
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 * @return $content
@@ -275,8 +276,7 @@ if (!class_exists('Shopcommerce_Admin')) {
 		 * @var int $wp_query (fetching Data from DB having a Post type "product")
 		 */
 
-		public function ced_shortcode_shop($content = null)
-		{
+		public function ced_shortcode_shop( $content = null) {
 			$wp_query = new WP_Query(array(
 				'posts_per_page' => 2,
 				'post_type' => 'product',
@@ -284,10 +284,10 @@ if (!class_exists('Shopcommerce_Admin')) {
 			)); // Getting  from DB For Per Page Pagination
 			while ($wp_query->have_posts()) :
 				$wp_query->the_post();
-				$price = get_post_meta(get_the_ID(), 'ced_metabox_pricing', true);
-				$content = the_title('<h3 class="entry-title"><a href="' . get_permalink() . '">', '</a></h3>');
+				$price    = get_post_meta(get_the_ID(), 'ced_metabox_pricing', true);
+				$content  = the_title('<h3 class="entry-title"><a href="' . get_permalink() . '">', '</a></h3>');
 				$content .= the_post_thumbnail();
-				echo "<h3>Price:$" . $price['discountPrice'] . "</h3>";
+				echo '<h3>Price:$' . $price['discountPrice'] . '</h3>';
 			endwhile;
 			// Appending Pagination in $content
 			$content .= paginate_links(array(
@@ -301,16 +301,16 @@ if (!class_exists('Shopcommerce_Admin')) {
 		/**
 		 * function Name :product_admin_script
 		 * Description:Enqueuing Script Whenever Post Type is Product And Check Validation
+		 *
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 * @var int $status for current screen data
 		 * @return void
 		 */
 
-		function product_admin_script()
-		{
+		function product_admin_script() {
 			$status = get_current_screen();
-			if ($status->post_type == "product") {
+			if ($status->post_type == 'product') {
 				wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/validate.js', array('jquery'), $this->version, false);
 			}
 		}
@@ -319,13 +319,13 @@ if (!class_exists('Shopcommerce_Admin')) {
 		/**
 		 * function Name : Unset Session _after_logout
 		 * Description:Unset session of cart when user will logout Session
+		 *
 		 * @since  :1.0.0
 		 * Version :1.0.0
 		 * @var array $_SESSION['cedstore'] 
 		 */
 
-		function unsetSession_after_logout()
-		{
+		function unsetSession_after_logout() {
 			session_start();
 			unset($_SESSION['cedstore']);
 		}
@@ -334,17 +334,17 @@ if (!class_exists('Shopcommerce_Admin')) {
 		/**
 		 * ced_order_menu
 		 * Description : Adding Menu For Showing Orders List Using WP-List Table
+		 *
 		 * @return void
 		 */
-		function ced_order_menu()
-		{
+		function ced_order_menu() {
 			add_menu_page(
-				"Orders", // Menu Title
-				"Orders", // Menu Name
+				'Orders', // Menu Title
+				'Orders', // Menu Name
 				'manage_options', //Capabilities
-				"order-menu", //Slug
-				"ced_order_menu_html", //Function
-				"dashicons-products", //Icon
+				'order-menu', //Slug
+				'ced_order_menu_html', //Function
+				'dashicons-products', //Icon
 				30
 			);
 
@@ -353,14 +353,14 @@ if (!class_exists('Shopcommerce_Admin')) {
 			/**
 			 * ced_order_menu_html
 			 *	Description : Callback Function having Some html with wp-list-table For Order Menu 
+			 *
 			 * @return void
 			 * @var	$obj //Object for Class Ced_order_List
 			 */
-			function ced_order_menu_html()
-			{
-				include_once PLUGIN_DIRPATH . "admin/class-showDataorder-wp-list-table.php";
+			function ced_order_menu_html() {
+				include_once PLUGIN_DIRPATH . 'admin/class-showDataorder-wp-list-table.php';
 				$obj = new Ced_order_List();
-			?>
+				?>
 				<div class="wrap">
 					<h2>All Orders</h2>
 
